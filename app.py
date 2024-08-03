@@ -9,9 +9,7 @@ import random
 app = Flask(__name__)
 
 def generate_random_binary_word(min_length=1, max_length=7):
-    # Générer une longueur aléatoire pour le mot binaire
     length = random.randint(min_length, max_length)
-    # Générer un mot binaire de la longueur spécifiée
     word = ''.join(random.choice('01') for _ in range(length))
     return word
 
@@ -20,7 +18,6 @@ def generate_random_language(min_words=1, max_words=10, min_length=1, max_length
     language = [generate_random_binary_word(min_length, max_length) for _ in range(num_words)]
     return language
 
-# Charger le modèle
 model = joblib.load('SP_model.pkl')
 
 def generate_features(language):
@@ -87,8 +84,6 @@ def average_hamming_distance(language):
     return np.mean(distances)
 
 
-## 
-# Enlever le prefixe et s'il est vide on remplace par e
 def removeprefixe(language, prefixe):
     result = [
         (str[len(prefixe):] if str.startswith(prefixe) else str) or "e"
@@ -96,7 +91,6 @@ def removeprefixe(language, prefixe):
     ]
     return result
 
-# Enlever le epsilone
 def removeepsilone(language):
     result = [
         str[1:] if str.startswith("e") else str
@@ -104,7 +98,6 @@ def removeepsilone(language):
     ]
     return result
 
-# Residuel
 def residuel(language, mot):
     residuel = [s for s in language if s.startswith(mot)]
     if not residuel:
@@ -112,7 +105,6 @@ def residuel(language, mot):
     residuel = removeprefixe(residuel, mot)
     return residuel
 
-# Quotient c'est à dire l'union des languages 
 def quotient(*arrays):
     result_set = set()
     for array in arrays:
@@ -121,7 +113,6 @@ def quotient(*arrays):
                 result_set.add(item) 
     return sorted(result_set)
 
-# Vérifier si le mot est déjà passer
 def ifexist(residuel):
     seen = set()
     for r in residuel:
@@ -131,14 +122,12 @@ def ifexist(residuel):
         seen.add(r_tuple)
     return False
 
-# Enlever le string vide dans la language
 def residuel_func(language, mot):
     residuel = [s for s in language if s.startswith(mot)]
     if not residuel:
         residuel.append("vide")
     return removeprefixe(residuel, mot)
 
-# Sardinas
 def sardinas(language):
     residuel = []
     L1 = []
@@ -174,18 +163,12 @@ def sardinas(language):
 
     return residuel
 
-# Code or not
 def verificationcode(language):
     residuel = sardinas(language)
     for res in residuel:
         if "e" in res:
             return False
     return True
-
-##
-
-
-
 
 @app.route('/')
 def home():
@@ -195,15 +178,13 @@ def home():
 def predict():
     if request.method == 'POST':
         language = request.form['language'].split(',')
-        prediction = predict_language(model, language) #Boolean from model
-        algo = verificationcode(language)         # Boolean from Sardinas algorithm
-        
+        prediction = predict_language(model, language)
+        algo = verificationcode(language)
         return render_template('result.html', prediction=prediction , algo=algo)
     return render_template('index.html')
 
 @app.route('/test')
 def test():
-    # Initialize counters
     correct_predictions = 0
     total_tests = 5000
     
@@ -215,7 +196,6 @@ def test():
         if prediction_a == prediction_b:
             correct_predictions += 1
     
-    # Calculate efficiency percentage
     efficiency = (correct_predictions / total_tests) * 100
     
     return render_template('result_test.html', efficiency=efficiency)
