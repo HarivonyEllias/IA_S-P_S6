@@ -1,83 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language Code Prediction</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Language Code Predictor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef2f7;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        .container {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease forwards;
-        }
+    .container {
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
+      animation: fadeIn 0.5s ease forwards;
+      text-align: center;
+    }
 
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
 
-        label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
+    p.description {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
 
-        input[type="text"] {
-            padding: 10px;
-            margin-bottom: 20px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+      text-align: left;
+    }
 
-        button[type="submit"] {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
 
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-        }
+    .hint {
+      font-size: 12px;
+      color: #888;
+      margin-top: -15px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    button[type="submit"] {
+      padding: 12px 25px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: #f1f8ff;
+      border-left: 5px solid #007bff;
+      display: none; /* You can make it dynamic with JS */
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Enter a Language</h2>
-        <form action="/predict" method="post">
-            <label for="language">Language (comma separated words):</label>
-            <input type="text" id="language" name="language" required>
-            <br>
-            <button type="submit">Predict</button>
-        </form>
-    </div>
+  <div class="container">
+    <h1>Language Code Predictor</h1>
+    <p class="description">
+      This tool analyzes your input and predicts whether it represents a **code** or **natural language**, based on AI and the Sardinas–Patterson theory.
+    </p>
+    <form action="/predict" method="post">
+      <label for="language">Enter a binary sequence (comma-separated words):</label>
+      <input type="text" id="language" name="language" placeholder="e.g., 0, 1, 001, 00" required />
+      <div class="hint">Hint: Use format like <code>01, 001, 00</code></div>
+      <button type="submit">Predict</button>
+    </form>
+  </div>
 </body>
 </html>

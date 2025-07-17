@@ -1,75 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction Result</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prediction Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef2f7;
+      margin: 0;
+      padding: 40px;
+      color: #333;
+    }
 
-        .container {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease forwards;
-        }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease forwards;
+      max-width: 1000px;
+      margin: auto;
+      text-align: center;
+    }
 
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
 
-        p {
-            margin-bottom: 20px;
-        }
+    h2 {
+      margin-top: 30px;
+      color: #555;
+    }
 
-        a {
-            text-decoration: none;
-            color: #007bff;
-            transition: color 0.3s ease;
-        }
+    .result {
+      font-size: 48pt;
+      font-weight: bold;
+      margin: 20px 0;
+      text-align: center;
+    }
 
-        a:hover {
-            color: #0056b3;
-        }
+    .true {
+      color: #28a745;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    .false {
+      color: #dc3545;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    a {
+      display: block;
+      margin-top: 30px;
+      text-align: center;
+      background-color: #007bff;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #0056b3;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Prediction Result</h2>
-        <p>The language given is a code: 
-            <span style="font-size: 92pt;color: red;">{{ 'False' if prediction==False else '' }}</span>
-            <span style="font-size: 92pt;color: green;">{{ 'True' if prediction==True else '' }}</span>
-        </p>
-        <h2>Sardinas-Patterson Algo</h2>
-        <p>The language given is a code: 
-            <span style="font-size: 92pt;color: red;">{{ 'False' if algo==False else '' }}</span>
-            <span style="font-size: 92pt;color: green;">{{ 'True' if algo==True else '' }}</span>
-        </p>
+  <div class="container">
+    <h1>Prediction Result</h1>
 
-        <a href="/">Back</a>
+    <h2>AI Model Prediction</h2>
+    <div class="result {{ 'true' if prediction else 'false' }}">
+      {{ 'Code' if prediction else 'Not a code' }}
     </div>
+
+    <h2>Sardinas–Patterson Algorithm</h2>
+    <div class="result {{ 'true' if algo else 'false' }}">
+      {{ 'Code' if algo else 'Not a code' }}
+    </div>
+    <a href="/">← Try Again</a>
+  </div>
+    <br />
+    <br />
+    <br />
+
+  <div class="container">
+
+    <p>The model used to predict whether a given language is a code or not is based on the Random Forest algorithm, a powerful ensemble learning method.
+        Random Forest works by constructing a multitude of decision trees during training and combining their results to make a final prediction.
+         Each tree in the forest is trained on a different subset of the data with a random selection of features, which helps reduce overfitting and improves generalization.
+        This diversity among the trees allows the model to make more accurate and robust decisions.
+         In this project, Random Forest was chosen for its ability to handle complex patterns in data and its effectiveness in classification tasks like distinguishing coded languages from non-coded ones using features derived from the Sardinas-Patterson theory</p>
+    <h2>Features Used by the AI Model</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Description</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>nombre_mots</td>
+          <td>Total number of words in the language</td>
+          <td>Integer</td>
+        </tr>
+        <tr>
+          <td>longueur_moyenne</td>
+          <td>Average word length</td>
+          <td>Float</td>
+        </tr>
+        <tr>
+          <td>longueur_minimale</td>
+          <td>Shortest word length</td>
+          <td>Integer</td>
+        </tr>
+        <tr>
+          <td>longueur_maximale</td>
+          <td>Longest word length</td>
+          <td>Integer</td>
+        </tr>
+        <tr>
+          <td>distribution_longueur</td>
+          <td>Distribution of word lengths (counts per length)</td>
+          <td>List of Integers</td>
+        </tr>
+        <tr>
+          <td>complexité_shannon</td>
+          <td>Shannon entropy of concatenated characters</td>
+          <td>Float</td>
+        </tr>
+        <tr>
+          <td>redondance</td>
+          <td>Number of prefix/suffix overlaps between words</td>
+          <td>Integer</td>
+        </tr>
+        <tr>
+          <td>proportion_0</td>
+          <td>Proportion of 0s in the concatenated language</td>
+          <td>Float (0–1)</td>
+        </tr>
+        <tr>
+          <td>proportion_1</td>
+          <td>Proportion of 1s in the concatenated language</td>
+          <td>Float (0–1)</td>
+        </tr>
+        <tr>
+          <td>entropie_des_caracteres</td>
+          <td>Entropy based on character frequency</td>
+          <td>Float</td>
+        </tr>
+        <tr>
+          <td>distance_de_hamming_moyenne</td>
+          <td>Average Hamming distance between all word pairs</td>
+          <td>Float</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </body>
 </html>
